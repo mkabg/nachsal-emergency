@@ -14,6 +14,10 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log("Incoming request origin:", req.headers.origin);
+  next();
+});
 app.use(logger);
 app.use(
   cors({

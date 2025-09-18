@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { Loader } from "@googlemaps/js-api-loader";
 import "./reportSoldierPlace.css";
 import type { Report } from "../soldier/SoldierTable";
-import { AlartContext } from "../../context/AlartOnContext";
+import { AlertContext } from "../../context/AlertOnContext";
 
 const API = "AIzaSyAt8qf1gUfAzXPOvKASVGfDM8gWnDF74dc"; // מפתח גוגל בלבד
 
@@ -13,7 +13,7 @@ type DataForm = { status: string; location: string };
 
 export default function ReportSoldierPlace() {
   const auth = useContext(AuthContext);
-  const {alert} = useContext(AlartContext)!;
+  const {alert} = useContext(AlertContext)!;
 
   const soldierName = auth?.soldier?.name || "soldier";
   const [dataForm, setDataForm] = useState<DataForm>({

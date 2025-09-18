@@ -14,10 +14,10 @@ export default function Home() {
       navigate("/login");
     } else if (auth?.soldier?.name && !auth.soldier.password) {
       navigate("change_password");
-    } else {
-      navigate(`/soldier_page/${auth.soldier.personalNumber}`);
     } else if (auth?.soldier?.name && auth?.soldier?.role === "soldier") {
       navigate("/report_soldier_place");
+    } else {
+      navigate(`/soldier_page/${auth.soldier.personalNumber}`);
     }
 
     // Check notification permission after login/redirect

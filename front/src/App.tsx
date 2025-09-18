@@ -23,9 +23,13 @@ export default function App() {
       const res = await fetch(`${URL}/auth/me`, { credentials: "include" });
       if (res.ok) {
         const data = await res.json();
-        const alertOn = await alertOnApi(data.personalNumber);
-        setAlert(alertOn);
-        setSoldier(data);
+        if (data) {
+          const alertOn = await alertOnApi(data.personalNumber);
+          setAlert(alertOn);
+          setSoldier(data);
+        } else {
+          setSoldier(null);
+        }
       } else {
         setSoldier(null);
       }

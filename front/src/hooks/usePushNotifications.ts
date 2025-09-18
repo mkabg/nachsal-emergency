@@ -103,7 +103,11 @@ export function usePushNotifications() {
         const subscribeRes = await fetch(`${URL}/push/subscribe`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(subscription.toJSON()),
+          body: JSON.stringify({
+            endpoint: subscription.endpoint,
+            p256dh: subscription.toJSON().keys?.p256dh,
+            auth: subscription.toJSON().keys?.auth,
+          }),
           credentials: "include",
         });
 

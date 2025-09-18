@@ -13,7 +13,7 @@ export default function Home() {
     if (!auth?.soldier?.name) {
       navigate("/login");
     } else if (auth?.soldier?.name && !auth.soldier.password) {
-      navigate("change_password");
+      navigate("/change-password");
     } else if (auth?.soldier?.name && auth?.soldier?.role === "soldier") {
       navigate("/report_soldier_place");
     } else {

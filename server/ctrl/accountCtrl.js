@@ -35,7 +35,7 @@ export const login = async (req, res) => {
     const token = createToken(soldier);
     // In a production environment, you should use secure: true and sameSite: "None".
     // For development, we use secure: false and sameSite: "Lax" to allow cookies over HTTP.
-    return res.cookie("token", token, { httpOnly: true, secure: false, sameSite: "Lax", maxAge: 1000 * 60 * 60 }).json(soldier);
+    return res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "Lax", maxAge: 1000 * 60 * 60 }).json(soldier);
   } catch (error) {
     console.log("login message error: ", error);
     return res.status(500).json({ msg: "Login failed." });

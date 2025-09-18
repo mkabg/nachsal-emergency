@@ -37,6 +37,7 @@ export default function Login() {
           role: data.role,
           password: data.password == data.personal_number ? false : true
         });
+        // auth?.setPassword(data.password == data.personal_number ? false : true)
       } else {
         setMessage("מספר אישי או סיסמה שגויים.");
         setStatusInput("errorLogin");

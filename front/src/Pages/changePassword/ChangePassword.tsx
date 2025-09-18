@@ -28,18 +28,19 @@ export default function ChangePassword() {
 
             const data = await res.json();
             console.log(data);
-            
+
             setIsLoading(false);
             if (data.personal_number) {
                 setStatusInput("goodLogin");
                 setMessage("התחברת בהצלחה!");
-                
+
                 auth?.setSoldier({
                     personalNumber: data.personal_number,
                     name: data.name,
                     role: data.role,
                     password: data.password == data.personal_number ? false : true
                 });
+                // auth?.setPassword(data.password == data.personal_number ? false : true)
             } else {
                 setMessage("סיסמא שגויה");
                 setStatusInput("errorLogin");

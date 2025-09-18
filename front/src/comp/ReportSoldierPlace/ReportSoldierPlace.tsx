@@ -1,9 +1,11 @@
 // ReportSoldierPlace.tsx
 import { useState, useContext } from "react";
-import { addSoldierReport } from "../../api";
+import { addSoldierReport, getDirectSoldier } from "../../api";
 import { AuthContext } from "../../context/AuthContext";
 import { Loader } from "@googlemaps/js-api-loader";
 import "./reportSoldierPlace.css";
+import type { Report } from "../soldier/SoldierTable";
+import { AlartContext } from "../../context/AlartOnContext";
 
 const API = "AIzaSyAt8qf1gUfAzXPOvKASVGfDM8gWnDF74dc"; // מפתח גוגל בלבד
 
@@ -11,6 +13,8 @@ type DataForm = { status: string; location: string };
 
 export default function ReportSoldierPlace() {
   const auth = useContext(AuthContext);
+  const {alert} = useContext(AlartContext)!;
+
   const soldierName = auth?.soldier?.name || "soldier";
   const [dataForm, setDataForm] = useState<DataForm>({
     status: "",
@@ -87,18 +91,23 @@ export default function ReportSoldierPlace() {
     }, 2000);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!auth?.soldier) {
       setMsg("לא נמצאו פרטי חייל");
       return;
     }
+
+    const children = await getDirectSoldier(String(auth.soldier?.personalNumber));
+    const completed = children.filter((child: Report) => child.done === true).length;
+    if(completed !== children.length) return setMsg('נא וודא שכל הפקודים שלחו טופס נכס"ל')
+    
     addSoldierReport({
       personal_number: auth.soldier.personalNumber,
       location: dataForm.location,
       status: dataForm.status,
     })
-      .then(() => {
+    .then(async () => {
         setMsg("הדיווח נשלח בהצלחה");
         setDataForm({ status: "", location: "" });
       })
@@ -106,8 +115,8 @@ export default function ReportSoldierPlace() {
         setMsg("שגיאה בשליחת הדיווח: " + err.message);
       });
   };
-
-  return (
+console.log(alert)
+  return ( alert ?
     <div className="Report_soldier_place">
       <form className="form-nachsal" onSubmit={handleSubmit}>
         <div className="tile">
@@ -175,6 +184,6 @@ export default function ReportSoldierPlace() {
 
         {msg && <div className="error">{msg}</div>}
       </form>
-    </div>
+    </div> : <h1>אין עכשיו התראת נכס"ל</h1>
   );
 }

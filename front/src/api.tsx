@@ -59,7 +59,6 @@ export async function sendNechsal(personalNumber: string) {
 
 export async function alertOnApi(personalNumber: number) {
   console.log("nechsal send");
-
   const res = await fetch(`${URL}/reports/alert_on/${personalNumber}`, {
     method: "GET",
     credentials: "include",

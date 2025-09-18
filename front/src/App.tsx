@@ -17,19 +17,17 @@ export const URL = import.meta.env.VITE_API_URL;
 export default function App() {
   const [soldier, setSoldier] = useState<Soldier | null>(null);
   const [alert, setAlert] = useState<boolean>(false);
-
+  let idInterval: number;
   const checkAuth = async () => {
     try {
       const res = await fetch(`${URL}/auth/me`, { credentials: "include" });
       if (res.ok) {
         const data = await res.json();
-        if (data) {
+        idInterval = setInterval(async () => {
           const alertOn = await alertOnApi(data.personalNumber);
           setAlert(alertOn);
-          setSoldier(data);
-        } else {
-          setSoldier(null);
-        }
+        }, 120 * 1000);
+        setSoldier(data);
       } else {
         setSoldier(null);
       }
@@ -41,6 +39,7 @@ export default function App() {
 
   useEffect(() => {
     checkAuth();
+    return () => clearInterval(idInterval);
   }, []);
   return (
     <>

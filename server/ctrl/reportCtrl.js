@@ -63,11 +63,15 @@ export const getSoldierDetails = async (req, res) => {
 
 export const createReport = async (req, res) => {
   try {
-    const isTrue = await createReportDB(
-      { ...req.body, done: true },
-      req.params.personalNumber
-    );
-    if (isTrue) return res.json({ msg: "Report added successfully" });
+    const report = {
+      ...req.body,
+      created_at: `${new Date().toLocaleDateString()}  ${new Date().toLocaleTimeString()}`,
+      done: true,
+      alert_on: false
+    };
+    console.log(report);
+    const isTrue = await createReportDB(report, req.params.personalNumber);
+    if (isTrue) return res.json({ msg: "√ added report" });
     else res.status(403).json({ msg: "create report failed" });
   } catch (error) {
     console.log("create Report error: ", error);
@@ -78,7 +82,7 @@ export const createReport = async (req, res) => {
 export const isAlertOn = async (req, res) => {
   try {
     const alert = await isAlertOnTrueDB(req.params.personalNumber);
-    res.json(alert);
+    res.json(alert.alert_on);
   } catch (error) {
     console.log("is alert on error: ", error);
     res.status(500).json({ msg: "is alert on failed" });

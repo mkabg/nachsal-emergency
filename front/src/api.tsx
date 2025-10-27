@@ -1,4 +1,8 @@
-import { URL } from "./App";
+const URL = import.meta.env.VITE_SERVER_URL;
+
+if (!URL) {
+  throw new Error("VITE_SERVER_URL is not defined in environment variables.");
+}
 export async function addSoldierReport({
   personal_number,
   location,
@@ -25,6 +29,7 @@ export async function getDirectSoldier(personalNumber: string) {
     method: "GET",
     credentials: "include",
   });
+  if (!result.ok) throw new Error("Failed to fetch direct soldier data.");
   return result.json();
 }
 
@@ -36,6 +41,7 @@ export async function getSoldierDetails(personalNumber: string) {
       credentials: "include",
     }
   );
+  if (!result.ok) throw new Error("Failed to fetch soldier details.");
   return result.json();
 }
 
@@ -44,6 +50,7 @@ export async function logout() {
     method: "GET",
     credentials: "include",
   });
+  if (!result.ok) throw new Error("Logout failed.");
   return result.json();
 }
 
@@ -54,6 +61,7 @@ export async function sendNechsal(personalNumber: string) {
     method: "GET",
     credentials: "include",
   });
+  if (!result.ok) throw new Error("Failed to send Nachsal.");
   return result.json();
 }
 
@@ -63,6 +71,7 @@ export async function alertOnApi(personalNumber: number) {
     method: "GET",
     credentials: "include",
   });
+  if (!res.ok) throw new Error("Failed to toggle alert.");
   const alert = await res.json()
   return alert;
 }

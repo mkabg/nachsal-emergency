@@ -6,8 +6,10 @@ export const createReportDB = async (obj, personalNumber) => {
     .update(obj)
     .eq("personal_number", Number(personalNumber));
   if (error) {
-    console.log("insertReportDB: ", error);
-    return false;
+    const err = new Error(error.message);
+    err.status = 500;
+    err.code = "DB_UPDATE_FAILED";
+    throw err;
   }
   return true;
 };
@@ -18,8 +20,10 @@ export const setAlertOnTrueDB = async (personalNumber) => {
     .update({ alert_on: true })
     .eq("personal_number", Number(personalNumber));
   if (error) {
-    console.log("setlAlertOnTrueDB: ", error);
-    throw error;
+    const err = new Error(error.message);
+    err.status = 500;
+    err.code = "DB_UPDATE_FAILED";
+    throw err;
   }
   return true;
 };
@@ -31,8 +35,10 @@ export const isAlertOnTrueDB = async (personalNumber) => {
     .eq("personal_number", Number(personalNumber))
     .single();
   if (error) {
-    console.log("isAlertOnTrueDB: ", error);
-    throw error;
+    const err = new Error(error.message);
+    err.status = 500;
+    err.code = "DB_SELECT_FAILED";
+    throw err;
   }
   return data;
 };

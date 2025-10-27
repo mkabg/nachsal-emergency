@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { URL } from "../App";
+const URL = import.meta.env.VITE_SERVER_URL;
+
+if (!URL) {
+  throw new Error("VITE_SERVER_URL is not defined in environment variables.");
+}
 
 // Helper function to convert VAPID key
 function urlBase64ToUint8Array(base64String: string) {

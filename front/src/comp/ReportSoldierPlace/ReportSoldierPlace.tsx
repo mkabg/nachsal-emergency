@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { Loader } from "@googlemaps/js-api-loader";
 import "./reportSoldierPlace.css";
 import type { Report } from "../soldier/SoldierTable";
-import { AlartContext } from "../../context/AlartOnContext";
+import { AlertContext } from "../../context/AlertOnContext";
 import NoAlertOn from "../NoAlertOn/NoAlertOn";
 
 const API = "AIzaSyAt8qf1gUfAzXPOvKASVGfDM8gWnDF74dc"; // מפתח גוגל בלבד

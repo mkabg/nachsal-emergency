@@ -1,5 +1,5 @@
 import "./SoldierTable.css";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { getDirectSoldier } from "../../api";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router";
@@ -21,7 +21,7 @@ export default function SoldierTable({ paramsNumber }: { paramsNumber: string | 
   const [progress, setProgress] = useState("");
   const navigate = useNavigate();
 
-  const fetchData = async (personalNumber: string | undefined) => {
+  const fetchData = useCallback(async (personalNumber: string | undefined) => {
     let responseDirectSoldiers;
     if (auth?.soldier) {
       responseDirectSoldiers = await getDirectSoldier(personalNumber!);
@@ -42,11 +42,11 @@ export default function SoldierTable({ paramsNumber }: { paramsNumber: string | 
     );
     setData(updatedSoldiers);
     navigate(`/soldier_page/${personalNumber}`);
-  };
+  }, [auth?.soldier, navigate]);
 
   useEffect(() => {
     fetchData(paramsNumber);
-  }, [paramsNumber]);
+  }, [paramsNumber, fetchData]);
 
   return (
     <>

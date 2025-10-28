@@ -8,7 +8,7 @@ import {
   isAlertOnTrueDB,
   setAlertOnTrueDB,
 } from "../DAL/reportDAL.js";
-import { mapSoldiers } from "../services/mapSoldires.js";
+import { mapSoldiers } from "../services/mapSoldiers.js";
 import { getDataFromToken } from "../services/getDataFromToken.js";
 
 export const getDirectSoldiers = async (req, res) => {
@@ -38,14 +38,14 @@ export const getDirectSoldiersWithReports = async (req, res) => {
 export const SendNachsal = async (req, res) => {
   try {
     const {personalNumber} = getDataFromToken(req)
-    const arraySoldires = await mapSoldiers(personalNumber);
-    for (const soldier of [personalNumber, ...arraySoldires]) {
+    const arraySoldiers = await mapSoldiers(personalNumber);
+    for (const soldier of [personalNumber, ...arraySoldiers]) {
       await setAlertOnTrueDB(soldier);
     }
 
     return res.json({ msg: "success" });
   } catch (error) {
-    console.log("SendNachsal faild",error);
+    console.log("SendNachsal failed",error);
     return res.status(500).json({ msg: "faild" });
   }
 };

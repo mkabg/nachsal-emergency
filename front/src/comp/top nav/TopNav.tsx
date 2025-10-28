@@ -28,7 +28,7 @@ export default function TopNav() {
     update();
     const intervalId: number = window.setInterval(update, 1000);
     return () => clearInterval(intervalId);
-  }, [auth?.soldier]);
+  }, [auth?.soldier, duration]);
 
   return (
     <>

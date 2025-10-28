@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router";
 import Home from "./Pages/home/Home";
 import Login from "./Pages/login/Login";
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AuthContext, type Soldier } from "./context/AuthContext";
 import ReportSoldierPlace from "./comp/ReportSoldierPlace/ReportSoldierPlace";
 import TopNav from "./comp/top nav/TopNav";
@@ -17,15 +17,16 @@ export const URL = "https://nachsal-emergency.onrender.com";
 export default function App() {
   const [soldier, setSoldier] = useState<Soldier | null>(null);
   const [alert, setAlert] = useState<boolean>(false);
-  let idInterval: number;
-  const checkAuth = async () => {
+  const idInterval = useRef<number | undefined>(undefined);
+
+  const checkAuth = useCallback(async () => {
     try {
       const res = await fetch(`${URL}/auth/me`, { credentials: "include" });
       if (res.ok) {
         const data = await res.json();
         let alertOn = await alertOnApi(data.personalNumber);
         setAlert(alertOn);
-        idInterval = setInterval(async () => {
+        idInterval.current = setInterval(async () => {
           alertOn = await alertOnApi(data.personalNumber);
           setAlert(alertOn);
         }, 10000);
@@ -37,12 +38,12 @@ export default function App() {
       console.error("Auth check failed:", err);
       setSoldier(null);
     }
-  };
+  }, []);
 
   useEffect(() => {
     checkAuth();
-    return () => clearInterval(idInterval);
-  }, []);
+    return () => clearInterval(idInterval.current);
+  }, [checkAuth]);
   return (
     <>
       <AlertContext.Provider value={{ alert, setAlert }}>

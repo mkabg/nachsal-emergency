@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { getSoldierDetails } from "../../api";
 import "./personalData.css";
@@ -17,17 +17,17 @@ export default function PersonalData({ paramsNumber }: { paramsNumber: string | 
   const auth = useContext(AuthContext);
   const [data, setData] = useState<PersonalData>();
 
-  const fetchData = async (paramsNumber: string | undefined) => {
+  const fetchData = useCallback(async (paramsNumber: string | undefined) => {
     let response;
     if (auth?.soldier) {
       response = await getSoldierDetails(paramsNumber!);
     }
     setData(response);
-  };
+  }, [auth?.soldier]);
 
   useEffect(() => {
     fetchData(paramsNumber);
-  }, [paramsNumber]);
+  }, [paramsNumber, fetchData]);
   
   return (
     <div className="personalCard">

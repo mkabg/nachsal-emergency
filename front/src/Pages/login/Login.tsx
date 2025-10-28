@@ -52,7 +52,7 @@ export default function Login() {
     if (auth?.soldier?.name) {
       navigate("/");
     }
-  }, [auth?.soldier])
+  }, [auth?.soldier, navigate])
 
   return (
     <div className="login">

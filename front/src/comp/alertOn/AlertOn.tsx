@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import AlertOnButton from "./AlertOnButton";
 import "./alertOn.css";
@@ -12,7 +12,7 @@ export default function AlertOn() {
   const auth = useContext(AuthContext);
   const duration = 30 * 60 * 1000; // משך הזמן הרצוי בדקות
 
-  const activateNachsalAlert = async () => {
+  const activateNachsalAlert = useCallback(async () => {
     if (!auth?.soldier?.personalNumber) return;
     try {
       const res = await sendNechsal();
@@ -20,7 +20,7 @@ export default function AlertOn() {
     } catch (err) {
       console.error("Error sending Nachsal Alert:", err);
     }
-  };
+  }, [auth?.soldier?.personalNumber]);
 
   useEffect(() => {
     let interval: number;
@@ -47,7 +47,7 @@ export default function AlertOn() {
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, auth?.soldier]);
+  }, [isRunning, auth?.soldier, activateNachsalAlert, duration]);
 
   return (
     <div className="alert-on-container">

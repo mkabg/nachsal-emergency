@@ -71,7 +71,7 @@ export default function ReportSoldierPlace() {
               ...prev,
               location: addr || "לא נמצאה כתובת",
             }));
-          } catch (e: any) {
+          } catch (e: unknown) {
             setMsg("שגיאה מה-Geocoder: " + String(e));
           } finally {
             setLoading(false);

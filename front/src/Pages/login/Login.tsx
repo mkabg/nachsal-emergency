@@ -42,7 +42,8 @@ export default function Login() {
         setMessage("מספר אישי או סיסמה שגויים.");
         setStatusInput("errorLogin");
       }
-    } catch (err) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (err) {
       setIsLoading(false);
       setMessage("שגיאת רשת. נסה שוב.");
       setStatusInput("errorLogin");

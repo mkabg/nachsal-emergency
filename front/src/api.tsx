@@ -75,3 +75,24 @@ export async function alertOnApi(personalNumber: number) {
   const alert = await res.json()
   return alert;
 }
+
+export async function activateAlert({
+  title,
+  body,
+  url,
+}: {
+  title: string;
+  body: string;
+  url: string;
+}) {
+  const result = await fetch(`${URL}/alerts/activate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ title, body, url }),
+    credentials: "include",
+  });
+  if (!result.ok) throw new Error("Failed to activate alert.");
+  return result.json();
+}

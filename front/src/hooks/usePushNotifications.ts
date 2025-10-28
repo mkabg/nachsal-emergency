@@ -9,7 +9,7 @@ if (!URL) {
 function urlBase64ToUint8Array(base64String: string) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
   const base64 = (base64String + padding)
-    .replace(/\-/g, "+")
+    .replace(/-/g, "+")
     .replace(/_/g, "/");
   const rawData = window.atob(base64);
   const outputArray = new Uint8Array(rawData.length);
@@ -121,9 +121,9 @@ export function usePushNotifications() {
         setIsSubscribed(true);
         console.log("Subscribed successfully.");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Subscription failed:", err);
-      setError(err.message || "Failed to process subscription.");
+      setError((err as Error).message || "Failed to process subscription.");
       setIsSubscribed(false); // Ensure state is correct on failure
     } finally {
       setIsLoading(false);

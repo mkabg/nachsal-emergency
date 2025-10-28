@@ -45,6 +45,7 @@ export default function ChangePassword() {
                 setMessage("סיסמא שגויה");
                 setStatusInput("errorLogin");
             }
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
             setIsLoading(false);
             setMessage("שגיאת רשת. נסה שוב.");

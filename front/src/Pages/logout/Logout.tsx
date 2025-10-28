@@ -18,9 +18,11 @@ export default function Logout() {
                 }, 1200);
             }
         }
-        catch (err) {
-
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        catch (_err) {
+            // Intentionally ignore logout errors
         }
+
     }
     return (
         <div className="login">

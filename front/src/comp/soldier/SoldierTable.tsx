@@ -14,7 +14,7 @@ export type Report = {
   created_at: string;
 };
 
-export default function SoldierTable({ paramsNumber }: any) {
+export default function SoldierTable({ paramsNumber }: { paramsNumber: string | undefined }) {
   const auth = useContext(AuthContext);
   const [data, setData] = useState<Report[]>([]);
   const [progressClass, setProgressClass] = useState("");

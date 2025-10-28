@@ -13,7 +13,7 @@ export type PersonalData = {
   phone: string;
 };
 
-export default function PersonalData({ paramsNumber }: any) {
+export default function PersonalData({ paramsNumber }: { paramsNumber: string | undefined }) {
   const auth = useContext(AuthContext);
   const [data, setData] = useState<PersonalData>();
 

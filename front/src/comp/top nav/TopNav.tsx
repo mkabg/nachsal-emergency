@@ -13,7 +13,6 @@ export default function TopNav() {
   const duration = 30 * 60 * 1000;
 
   useEffect(() => {
-    let interval: number | undefined;
     const update = () => {
       const startTimeLS = localStorage.getItem("alertOnStartTime");
       if (startTimeLS) {
@@ -26,8 +25,8 @@ export default function TopNav() {
       }
     };
     update();
-    interval = window.setInterval(update, 1000);
-    return () => clearInterval(interval);
+    const intervalId: number = window.setInterval(update, 1000);
+    return () => clearInterval(intervalId);
   }, [auth?.soldier]);
 
   return (

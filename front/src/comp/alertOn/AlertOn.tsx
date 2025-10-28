@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { sendNechsal } from "../../api";
+import { activateAlert } from "../../api";
 import { AuthContext } from "../../context/AuthContext";
 import AlertOnButton from "./AlertOnButton";
 import "./AlertOn.css";
@@ -12,13 +12,16 @@ export default function AlertOn() {
   const auth = useContext(AuthContext);
   const duration = 30 * 60 * 1000; // משך הזמן הרצוי בדקות
 
-  const nechsal = async () => {
+  const activateNachsalAlert = async () => {
     if (!auth?.soldier?.personalNumber) return;
     try {
-      const res = await sendNechsal(String(auth.soldier.personalNumber));
-      console.log("Nachsal sent:", res);
+      const title = "Nachsal Alert";
+      const body = `Soldier ${auth.soldier.personalNumber} has activated a Nachsal alert.`;
+      const url = window.location.origin; // Or a specific alert page URL
+      const res = await activateAlert({ title, body, url });
+      console.log("Nachsal Alert sent:", res);
     } catch (err) {
-      console.error("Error sending nechsal:", err);
+      console.error("Error sending Nachsal Alert:", err);
     }
   };
 
@@ -31,7 +34,7 @@ export default function AlertOn() {
       if (!localStorage.getItem("alertOnStartTime")) {
         localStorage.setItem("alertOnStartTime", String(Date.now()));
       }
-      nechsal();
+      activateNachsalAlert();
       startTime = Number(localStorage.getItem("alertOnStartTime"));
 
       interval = setInterval(() => {

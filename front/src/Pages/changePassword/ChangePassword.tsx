@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import "../login/login.css";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router";
@@ -27,19 +27,14 @@ export default function ChangePassword() {
             });
 
             const data = await res.json();
-            console.log(data);
-            
+
             setIsLoading(false);
             if (data.personal_number) {
                 setStatusInput("goodLogin");
-                setMessage("התחברת בהצלחה!");
-                
-                auth?.setSoldier({
-                    personalNumber: data.personal_number,
-                    name: data.name,
-                    role: data.role,
-                    password: data.password == data.personal_number ? false : true
-                });
+                setMessage("הסיסמא שונתה בהצלחה!");
+                setTimeout(() => {
+                    navigate("/")
+                }, 1000)
             } else {
                 setMessage("סיסמא שגויה");
                 setStatusInput("errorLogin");
@@ -51,15 +46,8 @@ export default function ChangePassword() {
         }
     }
 
-    useEffect(() => {
-        if (auth?.soldier?.password) {
-            navigate("/");
-        }
-    }, [auth?.soldier?.password])
-
     return (
         <div className="login">
-            <h1 className="h1">ברוכים הבאים למערכת נכס"ל</h1>
             <form className="form" onSubmit={handleSubmit}>
                 {isLoading && <span className="loader-login"></span>}
                 <h2 className="h2">שינוי סיסמא</h2>

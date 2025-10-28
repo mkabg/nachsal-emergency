@@ -1,0 +1,14 @@
+.no-alert-on {
+    
+  text-align: center;
+  margin-top: 20px;
+font-size: 2rem;
+  color: var(--color-dark);
+  margin-bottom: 8px;}
+#idf {
+  margin-top: 20px;
+  width: 350px;
+  height: 350px;
+  background: linear-gradient(90deg, #2e7d32 0%, #388e3c 100%);
+  padding: 35px;
+}

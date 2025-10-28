@@ -40,11 +40,40 @@
 
 .alert-on-progress-fill {
   height: 100%;
-  background-color: #4caf50;
-  transition: width 0.1s linear;
+  background-color:linear-gradient(90deg, #770703ff 0%, #fc0202ff 100%);
+  transition: width 0.2s linear;
 }
 
 .alert-on-text {
   margin-top: 5px;
   font-size: 14px;
+}
+
+/* Responsive adjustments for alertOn.css */
+@media (max-width: 768px) {
+  .alert-on-btn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    min-width: unset;
+    max-width: 150px; /* Allow it to grow a bit more */
+  }
+
+  .alert-on-text {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .alert-on-btn {
+    padding: 10px 15px;
+    font-size: 0.85rem;
+    width: 100%; /* Make it full width on very small screens */
+    max-width: 200px; /* But limit its max width */
+    margin: 0 auto; /* Center it */
+  }
+
+  .alert-on-text {
+    font-size: 12px;
+    text-align: center;
+  }
 }

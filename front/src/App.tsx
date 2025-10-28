@@ -12,19 +12,23 @@ import { AlertContext } from "./context/AlertOnContext";
 import { alertOnApi } from "./api";
 import ChangePassword from "./Pages/changePassword/ChangePassword";
 
-export const URL = import.meta.env.VITE_API_URL;
+export const URL = "https://nachsal-emergency.onrender.com";
 
 export default function App() {
   const [soldier, setSoldier] = useState<Soldier | null>(null);
   const [alert, setAlert] = useState<boolean>(false);
-
+  let idInterval: number;
   const checkAuth = async () => {
     try {
       const res = await fetch(`${URL}/auth/me`, { credentials: "include" });
       if (res.ok) {
         const data = await res.json();
-        const alertOn = await alertOnApi(data.personalNumber);
+        let alertOn = await alertOnApi(data.personalNumber);
         setAlert(alertOn);
+        idInterval = setInterval(async () => {
+          alertOn = await alertOnApi(data.personalNumber);
+          setAlert(alertOn);
+        }, 10000);
         setSoldier(data);
       } else {
         setSoldier(null);
@@ -37,6 +41,7 @@ export default function App() {
 
   useEffect(() => {
     checkAuth();
+    return () => clearInterval(idInterval);
   }, []);
   return (
     <>
@@ -65,6 +70,7 @@ export default function App() {
                 <Route path="/login" element={<Login />} />
               </>
             )}
+            <Route path="*" element={<Home />} />
           </Routes>
         </AuthContext.Provider>
       </AlertContext.Provider>

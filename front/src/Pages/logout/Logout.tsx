@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { logout } from "../../api";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -11,7 +11,7 @@ export default function Logout() {
         e.preventDefault();
         try {
             const response = await logout();
-            if (response) {
+            if (response.ok) {
                 auth?.setSoldier(null);
                 setTimeout(() => {
                     navigate('/');
@@ -26,11 +26,11 @@ export default function Logout() {
         <div className="login">
             {auth?.soldier?.name &&
             <div>
-                <h1 className="h1">ברוכים הבאים למערכת נכס"ל</h1>
                 <form className="form" onSubmit={handleSubmit}>
-                    <h2 className="h2">התנתקות</h2>
+                    <h2 className="h2">חשבון משתמש</h2>
                     <p>אתה מחובר בתור {auth?.soldier?.name}</p>
-                    <p>האם אתה בטוח שברצונך לצאת?</p>
+
+                    <Link to={"/change_password"}>לחץ לשינוי סיסמא</Link><br />
                     <button className="btnLogin" type="submit">התנתקות</button>
                 </form>
             </div>}

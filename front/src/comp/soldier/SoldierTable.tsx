@@ -30,6 +30,7 @@ export default function SoldierTable({ paramsNumber }: any) {
     const updatedSoldiers = await Promise.all(
       responseDirectSoldiers.map(async (soldier: Report) => {
         const children = await getDirectSoldier(String(soldier.personal_number));
+        // const children = await getAllSoldiersUnderCommandApi(soldier.personal_number);
         const completed = children.filter((child: Report) => child.done === true).length;
         const total = children.length;
         if (total !== completed) {
@@ -65,7 +66,7 @@ export default function SoldierTable({ paramsNumber }: any) {
                 </tr>
               </thead>
               <tbody>
-                {data.map((report) => (
+                {data.filter((report) => String(report.personal_number) !== paramsNumber).map((report) => (
                   <tr
                     key={report.personal_number}
                     onClick={() => fetchData(String(report.personal_number))}

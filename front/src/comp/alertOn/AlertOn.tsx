@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { sendNechsal } from "../../api";
 import { AuthContext } from "../../context/AuthContext";
 import AlertOnButton from "./AlertOnButton";
-import "./AlertOn.css";
+import "./alertOn.css";
 
 export default function AlertOn() {
   const [isRunning, setIsRunning] = useState(() => {
@@ -15,7 +15,7 @@ export default function AlertOn() {
   const nechsal = async () => {
     if (!auth?.soldier?.personalNumber) return;
     try {
-      const res = await sendNechsal(String(auth.soldier.personalNumber));
+      const res = await sendNechsal();
       console.log("Nachsal sent:", res);
     } catch (err) {
       console.error("Error sending nechsal:", err);

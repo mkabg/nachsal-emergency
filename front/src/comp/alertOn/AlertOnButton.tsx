@@ -1,4 +1,3 @@
-
 type AlertOnButtonProps ={
   onClick: () => void;
   disabled?: boolean;
@@ -14,3 +13,4 @@ export default function AlertOnButton({
     </button>
   );
 }
+

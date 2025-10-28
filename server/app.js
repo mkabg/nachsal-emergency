@@ -22,7 +22,7 @@ app.use(logger);
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:5173", "http://localhost:5174", "https://n-achsal-emergency-test.netlify.app", "https://nachsal-1.netlify.app"],
+    origin: ["http://localhost:5173", "http://localhost:5174", "https://n-achsal-emergency-test.netlify.app", "https://nachsal-emergency.netlify.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })

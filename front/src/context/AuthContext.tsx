@@ -4,7 +4,6 @@ export type Soldier = {
   personalNumber: number;
   name: string;
   role: string;
-  password: boolean;
 };
 
 type Auth = {

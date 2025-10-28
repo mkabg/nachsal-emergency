@@ -8,7 +8,8 @@ import {
   isAlertOnTrueDB,
   setAlertOnTrueDB,
 } from "../DAL/reportDAL.js";
-import { mapSoldiers } from "../services/mapSoldiers.js";
+import { mapSoldiers } from "../services/mapSoldires.js";
+import { getDataFromToken } from "../services/getDataFromToken.js";
 
 export const getDirectSoldiers = async (req, res) => {
   const personalNumber = req.params.personalNumber;
@@ -36,7 +37,7 @@ export const getDirectSoldiersWithReports = async (req, res) => {
 
 export const SendNachsal = async (req, res) => {
   try {
-    const personalNumber = req.params.personalNumber;
+    const {personalNumber} = getDataFromToken(req)
     const arraySoldires = await mapSoldiers(personalNumber);
     for (const soldier of [personalNumber, ...arraySoldires]) {
       await setAlertOnTrueDB(soldier);
@@ -44,8 +45,8 @@ export const SendNachsal = async (req, res) => {
 
     return res.json({ msg: "success" });
   } catch (error) {
-    console.log("SendNachsal failed");
-    return res.status(500).json({ msg: "failed" });
+    console.log("SendNachsal faild",error);
+    return res.status(500).json({ msg: "faild" });
   }
 };
 
@@ -82,6 +83,7 @@ export const createReport = async (req, res) => {
 export const isAlertOn = async (req, res) => {
   try {
     const alert = await isAlertOnTrueDB(req.params.personalNumber);
+    console.log(alert);
     res.json(alert.alert_on);
   } catch (error) {
     console.log("is alert on error: ", error);

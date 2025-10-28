@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { activateAlert } from "../../api";
 import { AuthContext } from "../../context/AuthContext";
 import AlertOnButton from "./AlertOnButton";
-import "./AlertOn.css";
+import "./alertOn.css";
 
 export default function AlertOn() {
   const [isRunning, setIsRunning] = useState(() => {
@@ -15,11 +15,8 @@ export default function AlertOn() {
   const activateNachsalAlert = async () => {
     if (!auth?.soldier?.personalNumber) return;
     try {
-      const title = "Nachsal Alert";
-      const body = `Soldier ${auth.soldier.personalNumber} has activated a Nachsal alert.`;
-      const url = window.location.origin; // Or a specific alert page URL
-      const res = await activateAlert({ title, body, url });
-      console.log("Nachsal Alert sent:", res);
+      const res = await sendNechsal();
+      console.log("Nachsal sent:", res);
     } catch (err) {
       console.error("Error sending Nachsal Alert:", err);
     }

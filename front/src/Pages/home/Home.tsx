@@ -12,8 +12,8 @@ export default function Home() {
   useEffect(() => {
     if (!auth?.soldier?.name) {
       navigate("/login");
-    } else if (auth?.soldier?.name && !auth.soldier.password) {
-      navigate("/change-password");
+    } else if (auth?.soldier?.name && auth?.soldier?.role === "commander") {
+      navigate(`/soldier_page/${auth.soldier.personalNumber}`);
     } else if (auth?.soldier?.name && auth?.soldier?.role === "soldier") {
       navigate("/report_soldier_place");
     } else {

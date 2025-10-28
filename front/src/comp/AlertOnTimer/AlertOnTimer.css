@@ -14,3 +14,18 @@
   z-index: 20;
   box-shadow: 0 -2px 8px rgba(2, 77, 28, 0.12);
 }
+
+/* Responsive adjustments for AlertOnTimer.css */
+@media (max-width: 768px) {
+  .alert-on-timer {
+    font-size: 1rem;
+    padding: 5px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .alert-on-timer {
+    font-size: 0.9rem;
+    padding: 4px 0;
+  }
+}

@@ -9,7 +9,7 @@ export async function mapSoldiers(commanderId) {
   while (stack.length > 0) {
     const currentCommander = stack.pop();
     const directSubs = soldiersArrray
-      .filter((s) => s.commander === Number(currentCommander))
+      .filter((s) => s.commander === currentCommander)
       .map((s) => s.personal_number)
       .filter((sub) => sub !== commanderId);
     result.push(...directSubs);

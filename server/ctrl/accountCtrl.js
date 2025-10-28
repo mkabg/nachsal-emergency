@@ -33,9 +33,7 @@ export const login = async (req, res) => {
     if (!isValidPassword)
       return res.status(403).json({ msg: "Incorrect personal number or password" });
     const token = createToken(soldier);
-    // In a production environment, you should use secure: true and sameSite: "None".
-    // For development, we use secure: false and sameSite: "Lax" to allow cookies over HTTP.
-    return res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "None", maxAge: 1000 * 60 * 60 }).json(soldier);
+    return res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "None"}).json(soldier);
   } catch (error) {
     console.log("login message error: ", error);
     return res.status(500).json({ msg: "Login failed." });
@@ -43,7 +41,7 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "None" }).json({ msg: "Logged out" });
+  res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "None"}).json({ msg: "Logged out" });
 };
 
 export const soldierVerification = (req, res) => {

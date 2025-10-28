@@ -5,7 +5,8 @@ import { AuthContext } from "../../context/AuthContext";
 import { Loader } from "@googlemaps/js-api-loader";
 import "./reportSoldierPlace.css";
 import type { Report } from "../soldier/SoldierTable";
-import { AlertContext } from "../../context/AlertOnContext";
+import { AlartContext } from "../../context/AlartOnContext";
+import NoAlertOn from "../NoAlertOn/NoAlertOn";
 
 const API = "AIzaSyAt8qf1gUfAzXPOvKASVGfDM8gWnDF74dc"; // מפתח גוגל בלבד
 
@@ -184,6 +185,6 @@ console.log(alert)
 
         {msg && <div className="error">{msg}</div>}
       </form>
-    </div> : <h1>אין עכשיו התראת נכס"ל</h1>
+    </div> : <NoAlertOn/>
   );
 }

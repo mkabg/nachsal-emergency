@@ -50,14 +50,13 @@ export async function logout() {
     method: "GET",
     credentials: "include",
   });
-  if (!result.ok) throw new Error("Logout failed.");
-  return result.json();
+  return result;
 }
 
-export async function sendNechsal(personalNumber: string) {
+export async function sendNechsal() {
   console.log("nechsal send");
 
-  const result = await fetch(`${URL}/reports/send_nachsal/${personalNumber}`, {
+  const result = await fetch(`${URL}/reports/send_nachsal`, {
     method: "GET",
     credentials: "include",
   });

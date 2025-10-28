@@ -1,3 +1,6 @@
+[build.environment]
+  VITE_SERVER_URL = "https://nachsal-emergency-fdsj.onrender.com"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

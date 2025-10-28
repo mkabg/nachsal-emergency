@@ -24,12 +24,17 @@ export default function App() {
       const res = await fetch(`${URL}/auth/me`, { credentials: "include" });
       if (res.ok) {
         const data = await res.json();
-        let alertOn = await alertOnApi(data.personalNumber);
-        setAlert(alertOn);
-        idInterval.current = setInterval(async () => {
-          alertOn = await alertOnApi(data.personalNumber);
+        console.log("Auth data:", data);
+        if (data && data.personalNumber) {
+          let alertOn = await alertOnApi(data.personalNumber);
           setAlert(alertOn);
-        }, 10000);
+          idInterval.current = setInterval(async () => {
+            alertOn = await alertOnApi(data.personalNumber);
+            setAlert(alertOn);
+          }, 10000);
+        } else {
+          console.error("Auth data or personalNumber is missing:", data);
+        }
         setSoldier(data);
       } else {
         setSoldier(null);

@@ -46,12 +46,12 @@ export const logout = (req, res) => {
 
 export const soldierVerification = (req, res) => {
   const token = req.cookies.token;  
-  if (!token) return res.json(null);
+  if (!token) return res.json({});
   try {
     const response = jwt.verify(token, process.env.JWT_SECRET);
     return res.status(200).json(response);
   } catch (err) {
     console.error("Token verification failed:", err.message);
-    return res.clearCookie("token").json(null);
+    return res.clearCookie("token").json({});
   }
 }

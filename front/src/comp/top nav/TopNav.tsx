@@ -3,12 +3,12 @@ import "./topNav.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import RunNachsal from "../alertOn/AlertOn";
-import { AlartContext } from "../../context/AlartOnContext";
+import { AlertContext } from "../../context/AlertOnContext";
 import AlertOnTimer from "../AlertOnTimer/AlertOnTimer";
 
 export default function TopNav() {
   const auth = useContext(AuthContext);
-  const alart = useContext(AlartContext);
+  const alart = useContext(AlertContext);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [progress, setProgress] = useState(0);
   const duration = 30 * 60 * 1000;
